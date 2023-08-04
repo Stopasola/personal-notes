@@ -310,3 +310,12 @@ By using upstream targets, Kong Gateway abstracts the complexities of the backen
 ![Alt text](./../resources/image-4.png)
 
 ![Alt text](./../resources/image-5.png)
+
+
+### Kong Plugin Summaries 
+
+[Authentication Methods Explained](./AuthenticationMethods.md)
+
+
+
+
