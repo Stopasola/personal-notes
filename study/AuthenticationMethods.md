@@ -132,3 +132,46 @@ app.listen(3000, () => {
   console.log('Server is running on port 3000.');
 });
 ```
+
+
+#### 1.3 OAuth2 
+
+
+
+OAuth 2.0 (Open Authorization 2.0) is an authorization framework that allows third-party applications to access protected resources on behalf of a user, without needing to know their credentials (e.g., username and password). It is widely used to enable secure and delegated access to APIs and services. OAuth 2.0 provides different grant types for different use cases, such as web applications, mobile applications, and server-to-server communication. It is commoly used on APIs auth.
+
+- Resource owner: entity that grants access to your data. **Owner of the resource**, it is how the OAuth2 classificates the user.
+- Client:  App tha interacts with the resource owner. In the case of an web app, it would be the browser app.
+- Resource Server: APIs exposed on the internet and needs data protection.
+- Authorization Server: Responsible to auth the server, and gives the access tokens. Have the Resource owner data.
+
+
+#### Sep by Step Approach
+
+1. Client Registration: The client application (third-party application) registers with the authorization server (usually the service provider) and receives a client ID and client secret.Register your data on the service, this step is mandatory before use OAuth. First you need assing to a form with multiple information, for example: 
+
+Step1: Client Registration: Register your application on GitHub Developer Settings to obtain a client ID and client secret.
+
+- URL de callback/URL de retorno: addres where you will receive answers of specific events. It is used to an app send data to another service,  allowing communication.
+
+2. Authorization Request: The client initiates the authorization process by redirecting the user to the authorization server's authorization endpoint. The client includes its client ID, requested scope (the permissions it needs), and a redirect URI.
+
+Step2: Redirect the user to GitHub's authorization endpoint for user consent
+
+`https://github.com/login/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=repo`
+
+3. User Consent: At the authorization endpoint, the user is presented with a consent screen where they can review the permissions requested by the client and decide whether to grant access.
+
+Step3: The user will be presented with GitHub's consent screen.
+
+4. Authorization Grant: If the user grants access, the authorization server issues an authorization grant to the client. 
+
+Step4: Upon user consent, GitHub will redirect the user back to your redirect URI with an authorization code as a query parameter.
+
+5. Token Request: The client exchanges the authorization grant for an access token by making a token request to the token endpoint of the authorization server. The access token is a short-lived credential that represents the client's authority to access the protected resources. Here is when you will receive an refresh_token, this will generate an access_token every time the last one is expired.
+
+Step5: Exchange the authorization code for an access token using the token endpoint.
+
+6. Accessing Protected Resources: The client includes the access token in its API requests as an authorization header, allowing the server to verify the token and grant access to the requested resources.
+
+Exercise: Code this process step by step. 

@@ -179,7 +179,7 @@ Developed by Kong Inc. (originally known as Mashape), the Kong API Gateway is an
 
 ### Kong Gateway Architecture
 
-![Kong Architecture](./../resources/image-1.png)
+![Kong Architecture](./../resources/ApiGatewayKong/image-1.png)
 
 - OpenResty: is an open-source web platform that integrates the **Nginx** web server with the **LuaJIT** (Just-In-Time Compiler for Lua) runtime, enabling developers to build high-performance web applications with the power of Lua scripting. OpenResty's blend of Nginx's web server capabilities with the versatility of Lua scripting makes it a powerful choice for developers seeking to build high-performance web applications, APIs, and microservices.
 
@@ -200,7 +200,7 @@ Kong gateway can be deployed in various topologies based on the infrastructure r
 
 ### Kong Gateway Operation
 
-![Example](./../resources/image-2.png)
+![Example](./../resources/ApiGatewayKong/image-2.png)
 
 Kong Gateway listens for HTTP trafic on its configured proxys ports and L4 trafic on explicitly configured stream_listen ports.
 
@@ -210,7 +210,7 @@ If a given request matches the rules of a specific route, kong Gateway will proc
 
 Each route may be linked to a service the gateway will run the plugins that has benn configured on the route and the associated service and will then proxy the request upstream. 
 
-![Kong Gateway modules](./../resources/image-1.png)
+![Kong Gateway modules](./../resources/ApiGatewayKong/image-1.png)
 
 ### Kong Manager
 
@@ -305,17 +305,16 @@ By using upstream targets, Kong Gateway abstracts the complexities of the backen
 - Can be applied globally or scoped to specifc sercides or routes
 - Kong Plugin Hub: plataform that provides 3rd party, official and community provided plugins available.
 
-![API Lifecycle](./../resources/image-3.png)
+![API Lifecycle](./../resources/ApiGatewayKong/image-3.png)
 
-![Alt text](./../resources/image-4.png)
+![Alt text](./../resources/ApiGatewayKong/image-4.png)
 
-![Alt text](./../resources/image-5.png)
+![Alt text](./../resources/ApiGatewayKong/image-5.png)
 
 
 ### Kong Plugin Summaries 
 
 [Authentication Methods Explained](./AuthenticationMethods.md)
-
 
 
 
