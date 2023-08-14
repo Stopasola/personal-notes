@@ -150,28 +150,51 @@ OAuth 2.0 (Open Authorization 2.0) is an authorization framework that allows thi
 
 1. Client Registration: The client application (third-party application) registers with the authorization server (usually the service provider) and receives a client ID and client secret.Register your data on the service, this step is mandatory before use OAuth. First you need assing to a form with multiple information, for example: 
 
-Step1: Client Registration: Register your application on GitHub Developer Settings to obtain a client ID and client secret.
-
 - URL de callback/URL de retorno: addres where you will receive answers of specific events. It is used to an app send data to another service,  allowing communication.
+
+**Step1:** Register your application on GitHub Developer Settings to obtain a client ID and client secret.
 
 2. Authorization Request: The client initiates the authorization process by redirecting the user to the authorization server's authorization endpoint. The client includes its client ID, requested scope (the permissions it needs), and a redirect URI.
 
-Step2: Redirect the user to GitHub's authorization endpoint for user consent
+**Step2:** Redirect the user to GitHub's authorization endpoint for user consent.
 
 `https://github.com/login/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=repo`
 
 3. User Consent: At the authorization endpoint, the user is presented with a consent screen where they can review the permissions requested by the client and decide whether to grant access.
 
-Step3: The user will be presented with GitHub's consent screen.
+**Step3:** The user will be presented with GitHub's consent screen.
 
 4. Authorization Grant: If the user grants access, the authorization server issues an authorization grant to the client. 
 
-Step4: Upon user consent, GitHub will redirect the user back to your redirect URI with an authorization code as a query parameter.
+**Step4:** Upon user consent, GitHub will redirect the user back to your redirect URI with an authorization code as a query parameter.
 
 5. Token Request: The client exchanges the authorization grant for an access token by making a token request to the token endpoint of the authorization server. The access token is a short-lived credential that represents the client's authority to access the protected resources. Here is when you will receive an refresh_token, this will generate an access_token every time the last one is expired.
 
-Step5: Exchange the authorization code for an access token using the token endpoint.
+**Step5:** Exchange the authorization code for an access token using the token endpoint.
 
 6. Accessing Protected Resources: The client includes the access token in its API requests as an authorization header, allowing the server to verify the token and grant access to the requested resources.
 
 Exercise: Code this process step by step. 
+
+#### Notes:
+
+**State:** parameter helps ensure the integrity of the authorization process and prevents attackers from forging legitimate authorization requests using unauthorized user sessions. It's an important security measure to include in your OAuth2 implementation.
+
+**Bearer:** The term "Bearer" indicates that the token itself is the only thing needed to authenticate the request, much like if you were to "bear" a ticket to access a show. The server trusts the token and the credentials it represents without the need for additional credentials or information.
+
+It's important to use HTTPS when transmitting bearer tokens to ensure their security since they grant access to protected resources. Additionally, bearer tokens should be kept confidential and not exposed to unauthorized users.
+
+In summary, "Bearer" is a way to convey that an access token should be presented directly to access a resource, without requiring additional credentials. It's a common authentication mechanism used in OAuth 2.0 and JWT-based systems.
+
+
+**JWT Vs OAuth2** OAuth 2.0 and JWT (JSON Web Tokens) are related concepts, but they are not the same thing. OAuth 2.0 is an authorization framework that defines how third-party applications can gain limited access to a user's resources on a resource server (often an API) on their behalf. JWT, on the other hand, is a specific format for encoding claims securely between two parties.
+To summarize, OAuth 2.0 is a broader authorization framework that defines how permissions are granted to third-party applications. JWT is a specific token format used in various contexts, including OAuth 2.0, for transmitting claims securely between parties.
+
+
+### [OAuth2 Implementation](https://replit.com/join/tcdplhdjgo-fernandostopaso) 
+
+
+
+
+
+
