@@ -314,7 +314,92 @@ By using upstream targets, Kong Gateway abstracts the complexities of the backen
 
 ### Kong Plugin Summaries 
 
-[Authentication Methods Explained](./AuthenticationMethods.md)
+#### [Authentication Methods Explained](./AuthenticationMethods.md)
+
+#### Security:
+
+Gives features like: Acme, Bot detection, CORS, and IP restriction. 
+#### Traffic controll
+
+Gives features like: proxy cache, rate limiting, request size limiting, request termination and response rate limiting.
+
+#### Serveless:
+
+Gives features like: Ability to involke and manadge AWS Lambda/Azzure functions.
+
+#### Logging
+
+Gives features like: File-log, HTTP-Log, Syslog, TCP-Log, UDP-Log
+
+#### Analytics and Monitoring
+
+Gives features like: 
+
+- Datadog: ability to log metrics for a service, route or consumer to a Datadog agent.
+- OpenTelemetry, Prometeus and StatsD 
 
 
+### Kong Admin Api
 
+![Alt text](./../resources/ApiGatewayKong/image-6.png)
+
+#### Kong Admin API and DB-Less Mode
+
+- In this mode the Admin API for each Kong Gateway node functions independently
+- Each config is in memory, there is no db for coordination.
+- In this mode the config must be done declaratively using an YMAL or JSON file.
+- In this mode the Admin API is mostly read-only and the only tasks are related to handling the declarative config, including
+  - Validating config against schemas, validatin plugins config, reloading declarative config, Setting a target's helth status in the load balancer.
+
+
+#### Content-type Headers
+
+##### [Http Headers](./HttpHeaders.md)
+
+
+### Virtual Lab
+
+Task 1: Install Kong Gateway
+You can the quickstart script curl -Ls https://get.konghq.com/quickstart | bash to quickly run runs Kong Gateway Enterprise and its supporting database in Free mode. This script uses Docker to execute a Kong Gateway and a PostgreSQL database containers.
+
+However, in our lab environment we will deploy Kong Gateway using Docker Compose
+
+From a terminal session, run the following command
+
+ docker compose up -d
+
+[+] Running 7/7
+ ⠿ Network kong-edu-net          Created                    0.1s
+ ⠿ Container postgres            Started                    1.3s
+ ⠿ Container smtp                Started                    1.3s
+ ⠿ Container kong-migrations     Started                    2.0s
+ ⠿ Container kong-migrations-up  Started                    2.8s
+ ⠿ Container kong-cp             Started                    3.9s
+ ⠿ Container kong-dp             Started                    4.7s
+
+
+Task 2: Verify Kong Gateway
+Kong Gateway makes available an Admin API on the default port 8001. The Admin API can be used for both querying and controlling the state of a Kong Gateway.
+
+Issue the following request for your local Kong Gateway instance:
+
+$ curl --head localhost:8001
+If Kong Gateway is running properly, it will respond with a 200 HTTP code:
+
+HTTP/1.1 200 OK
+Date: Fri, 10 Mar 2023 14:51:07 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+Access-Control-Allow-Origin: *
+X-Kong-Admin-Request-ID: MmqliL01p27xUfjElcElVNHlIDaC62uS
+Content-Length: 20112
+X-Kong-Admin-Latency: 9
+Server: kong/3.2.1.0-enterprise-edition
+
+Task 3: Evaluate Kong Gateway configuration
+The root route of the Admin API provides important information about the running Kong Gateway including networking, security, and plugin information.
+
+The full configuration is provided in the .configuration key of the returned JSON document:
+
+$ curl -s localhost:8001 | jq '.configuration'
+You will receive a large JSON response with Kong Gateway configuration information.
