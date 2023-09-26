@@ -53,7 +53,10 @@ designed in a way that they do not rely on persistent local data or state. Each 
 
 maintain some form of persistent state or data that is crucial for the app operation. Rely on data that persists across multiple requests or instances of the application.
 
+### ReplicaSet (Look depper)
 
+resource that helps you manage and maintain a specified number of identical pod replicas. It's a fundamental building block for ensuring the availability and scalability of applications within a Kubernetes cluster
+- You never need to deal with replicaset, just manipulate deployments
 ## Node Processes
 
 Kubernetes (K8s) has a hierarchical architecture that consists of different components, each with its specific role in managing containerized applications.
@@ -123,3 +126,43 @@ Role: etcd is a distributed key-value store that serves as the source of truth f
 
 > kubectl get nodes
 
+> kubectl logs  mongo-depl-79585f75cf-cbgvr 
+
+> kubectl config get-contexts
+
+> kubectl config current-context
+
+> kubectl describe service nginx-service
+
+## List IP of pods 
+
+> kube get pods -o wide
+
+## List pods and keep the command running 
+
+> kube get pod --watch
+
+## Enconde Variable in terminal
+
+> echo -n 'username' | base64
+
+> echo -n 'username' | base64
+
+## List deploymnets, services and replicas ???
+
+> kube get all | grep mongo
+
+
+## Layers of abstraction
+
+>> Deployment manages >> Replicaset manages a >> Pod is an abstraction of >> Container
+
+>> Everything below deployment is handled by kubernetes
+
+##  K8s YAML Configuration File
+
+
+
+FunFacts:
+
+- Deployment and Service goes in the same file becase they belong together 
