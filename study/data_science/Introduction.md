@@ -204,8 +204,65 @@ Calculo a média da posição.
 
 ![Alt text](image-10.png)
 
+## Associações entre variáveis categóricas/qualitativa
+
+
+- Esse tipo de teste é usado para determinar se duas vriáveis cetegóricas (qualitativas) estão associadas.
+- A análise se dá por meio da tabela de contigência.
+- A análise que, as vezes, o termo "independente" é usado para significar que não há assiciação entre as variáveis.
 
 
 
+### [Teste Qui-quadrado](https://www.youtube.com/watch?v=e29QDMg_58s)
 
+#### Pressuposto
+O teste Qui-quadrado carrega alguns pressupostos com ele:
+
+- Os níveis (ou categorias) das variáveis são mutualmente exclusivos. (Não pode contabilizar nos dois grupos).
+- Duas variáveis qualitativas com dois ou mais níveis cada
+- Unidades de observação não são pareadas.
+- O valor esperado das células deve ser 5 ou mais em pelo menos 80% das células, e nenhuma célula deve ter um valor esperado menor que um.
+
+**Quando os dados não representam essas condições, podemos usar o teste exato de Fisher**
+
+#### Hipóteses
+
+H0: não há associação entre as duas variáveis, ou seja, as variáveis de linha e coluna da tabela de contingência são independentes.
+
+HA: existe uma associação entre as duas variáveis, ou seja, as variáveis de linha e coluna são dependentes.
+
+#### Calculos do teste
+
+Diferença entre as fequências observadas e as esperadas.  
+
+![Alt text](image-12.png)
+
+
+![Alt text](image-11.png)
+
+E(0,0) = (56*80)/100 = 44,8
+E(0,1) = (56*20)/100 = 11,2
+E(1,0) = (44*80)/100 = 35,2
+E(1,1) = (44*20)/100 = 8,8
+
+- Validações: 
+
+O valor esperado das células **É** 5 ou mais em 80% das células. 
+
+Nenhuma célula tem o valor esperado menor que 1
+
+**Valor Final:** X² = 9,75
+
+**Valor p:** 0,004
+
+Resumindo: O valor p que chegamos, indica que estamos abaixo do nível de significancia de 0,5% ou seja, podemos excluir a hipótese nula. E podemos fazer a associação entre acidente e gênero.
+
+![Alt text](image-13.png)
+
+
+#### Fun facts
+
+O valor p está relacionado ao valor p amostral
+
+### Teste Exato de Fisher
 
