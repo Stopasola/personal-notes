@@ -166,3 +166,6 @@ Role: etcd is a distributed key-value store that serves as the source of truth f
 FunFacts:
 
 - Deployment and Service goes in the same file becase they belong together 
+
+
+
