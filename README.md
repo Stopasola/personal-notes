@@ -22,3 +22,5 @@ Repository crafted seeking to store study annotations.
 - [x] Kanban
 - [ ] Kafka
 - [ ] DataDog
+- [ ] DataEng Architectures
+  - [ ] [Kappa Architecture](https://hazelcast.com/glossary/kappa-architecture/) 
