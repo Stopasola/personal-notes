@@ -53,6 +53,8 @@ FlexRS helps you reduce the cost of your batch processing pipelines because you 
 
 ## IAM, Quotas and Permissions
 
+### IAM
+
 When the pipeline is submitted, it is sent to two places. The SDK uploads your code to Cloud storage and sends it to the Dataflow service. The Dataflow service does a few things. It validates and optimizes the pipeline, it creates the Compute Engine virtual machines in your projects to run
 your code, it deploys the code to the VMs, and it starts to gather monitoring information for display. When all that is done, the VMs will start running your code. At each of the stages we mentioned-- user submission of code, Dataflow validating the pipeline, and the VM running-- IAM plays a role in determining whether to continue the process.
 
@@ -89,3 +91,48 @@ This service account, <project-number>-compute @developer.gservices.com, is auto
 The Compute Engine default service account has broad access to your project's resources, which makes it easy to get started with Dataflow. For production workloads, we recommend that you create a new service account with only the roles and permissions that you need
 
 At a minimum, your service account must have the Dataflow worker role and can be used by adding the service account email flag when launching a Dataflow pipeline.
+
+### Quotas
+
+#### CPU 
+
+One of the quotas that Dataflow consumes is CPU. CPU quota is the total number of virtual CPUs across all of your VM instances in a region or a zone.
+
+![alt text](../../../resources/DataEng/ServerlessDataProcessingDataflow/image10.png)
+219 CPUs in the northamerica-northeast1 region.
+
+Considerations: 
+
+Ex: Say you want to start a Dataflow job with 100 workers. 
+If the VM size selected is N1-standard-1, meaning one CPU core per VM, the CPU usage will be 100. If the VM size selected is N1-standard-8, that would mean 800 CPUs are needed. If the limit is 600, the job will display an error because the CPU limit has been exceeded.
+
+#### IPs
+
+Another quota to consider is the number of in-use IP addresses in each region. The in-use IP address quota limits the number of VMs that can be launched with an external IP address for each region in your project.
+Like the CPU quota, this quota is shared across all Google Cloud products that create VMs with an external IP address.
+When you launch a Dataflow job, the default setting is for the VM to launch with an external IP address.
+Jobs that access APIs and services outside Google Cloud require internet access. However, if your job does not need to access any external APIs or services, you can launch
+the Dataflow job using internal IPs only, which saves money and conserves the in-use IP address quota.
+
+ -Unlike the CPU quota, the in-use IP address quota is independent of the machine type. There is no difference between launching 150 N1-standard-1s versus 150 N1-standard-8s.
+
+#### Persistant Disks
+
+![alt text](../../../resources/DataEng/ServerlessDataProcessingDataflow/image-7.png)
+
+For example, in the image shown here, Google Cloud products in my project that use. HDDs in northamerica-northeast1 are consuming 23.5 terabytes of disk space out of the available 102.4 terabytes. To specify the disk type, set the workerDiskType flag to the prefix shown in the image and end it with either pd-ssd or pd-standard.
+
+-  Batch pipeline: 
+
+![alt text](../../../resources/DataEng/ServerlessDataProcessingDataflow/image-8.png)
+
+-  Streamming pipeline: 
+
+![alt text](../../../resources/DataEng/ServerlessDataProcessingDataflow/image-9.png)
+
+
+### Test: 
+c
+Your project’s current SSD usage is 100 TB. You want to launch a streaming pipeline with shuffle done on the VM. You set the initial number of workers to 5 and the maximum number of workers to 100. What will be your project’s SSD usage when the job launches?
+
+Answer: **140 TB** Recall that the number of disks allocated equals the maximum number of workers in streaming pipelines. When shuffle is done on the VM, the default PD size is 400 GB. Doing 100 + (0.4 TB * 100 workers) gives you 140 TB.
