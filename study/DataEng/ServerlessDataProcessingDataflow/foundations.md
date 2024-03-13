@@ -132,7 +132,63 @@ For example, in the image shown here, Google Cloud products in my project that u
 
 
 ### Test: 
-c
+
 Your project’s current SSD usage is 100 TB. You want to launch a streaming pipeline with shuffle done on the VM. You set the initial number of workers to 5 and the maximum number of workers to 100. What will be your project’s SSD usage when the job launches?
 
 Answer: **140 TB** Recall that the number of disks allocated equals the maximum number of workers in streaming pipelines. When shuffle is done on the VM, the default PD size is 400 GB. Doing 100 + (0.4 TB * 100 workers) gives you 140 TB.
+
+## Security
+
+### Data Locality 
+
+- What tis regional endpoint ? 
+
+	The Dataflow backend exists in a few regions across the globe and can be different from the region in which your workers run.
+
+- What metadata is transferred between your project and the regional endpoint?
+
+	There are regular health checks from the workers, workers requesting a work item and the regional endpoint responding with a work item, the worker item status, and autoscaling events. Unexpected events are also transferred to the regional endpoint. For example, unhandled exceptions in user code, jobs that fail to launch because of permissions, worker item failures, and errors from another related system, such as Compute Engine.
+- Why specify a regional endpoint ?
+
+  The first is to support your project's security and compliance needs.
+	Ex: For example, if you work for a bank in certain countries, regulatory rules mandate that data does not leave the country of operation. These rules can be met by specifying the regional endpoint.
+	Ex 2: You can also specify a regional endpoint to minimize network latency and network transport costs.
+  If your pipeline sources, syncs, and staging locations are all in the same region, you will not be charged for network egress because all the info remains in the same region. If you have a pipeline with workers in northamerica-northeast and its regional endpoint is set to us-central1, your network egress charge will increase because of the metadata that is transferred between your project and the regional endpoint.
+
+Obs: If you want to use a supported regional endpoint and have no zone preference within the region, specify the regional flag only. In this case, the regional endpoint automatically selects the best zone based on available capacity.
+
+### Shared VPC
+
+Dataflow can run in networks that are either in the same project or in a separate project which we call the host project. When a network exists in a host project, we call the networking setup shared VPC.
+
+- Shared VPC lets organization admins delegate administrative responsibilities, such as creating and managing instances, to others while maintaining centralized control over network resources like subnets, routes, and firewalls.
+
+- When set to run in a shared VPC, Dataflow works in either a default or a custom network.
+
+	- The default network is the one automatically set by Google Cloud when you create a project.
+	- A custom network is one where you create the network and define the regions and the subnets in the network.
+
+- When setting the number of workers to use, remember to have enough IP addresses available.
+   - For example, if you have a subnet with a /29 subnet and no other VMs running in it, the maximum number of Dataflow workers that you can launch is four.
+
+### Private IPs
+
+Another security feature you can use with Dataflow is disabling external IP usage.
+
+By not using public IP addresses for your Dataflow workers, you also lower the number of public IP addresses you consume against your in-use IP address quota. With public IPs turned off, you can still perform administrative and monitoring tasks on Dataflow.
+
+By default, the Dataflow service assigns workers both public and private IP addresses.
+
+
+When you turn off public IP addresses, the Dataflow pipeline can access resources only in the following places:
+
+- another instance in the same VPC network, a shared VPC network, or a network with VPC network peering enabled.
+
+
+### CMEK (customer managed encryption key)
+
+This encryption of job metadata ensures that sensitive information, both user-generated and system-generated, remains protected throughout the Dataflow job lifecycle.
+By encrypting job metadata with Google encryption, data confidentiality and integrity are maintained, mitigating potential security risks associated with job-related information exposure.
+Furthermore, the encryption mechanisms employed, including CMEK for data-at-rest encryption and Google-managed keys, adhere to industry best practices for safeguarding data in cloud environments.
+Overall, these encryption practices play a crucial role in enhancing the security posture of Dataflow jobs, ensuring that data remains secure and private, even in transit and at rest within the Google Cloud Platform ecosystem.
+ 
