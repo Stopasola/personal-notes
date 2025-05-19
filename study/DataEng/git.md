@@ -176,5 +176,69 @@ OR
 ### Listing all branches
 
 
-git branch
+> git branch
 
+### Move to the speed-test branch
+
+> git switch speed-test
+
+### Creating a new branch and switch to it
+
+> git switch -c speed-test
+
+### Renaming a branch
+
+> git branch -m feature_dev chatbot
+
+
+### Deleting a branch
+
+> git branch -d chatbot
+
+OR 
+
+> git branch -D chatbot
+
+For deleting a branch that hasn't been merged
+
+
+### Diferença entre git checkout e git switch
+
+Principais diferenças:
+Comando	Propósito
+git checkout	Multifuncional (muda de branch, restaura arquivos, etc.)
+git switch	Exclusivo para troca/criação de branches (mais seguro e intuitivo)
+
+### git merge
+
+Une branches localmente, combinando as mudanças de uma branch na outra.
+
+- Usado para integrar mudanças de uma branch em outra.
+- Afeta apenas o repositório local.
+
+
+### Remote repo
+
+No Git, um remote repo (repositório remoto) é um repositório armazenado em um servidor ou em um serviço de hospedagem como GitHub, GitLab ou Bitbucket. Ele serve como um ponto central onde múltiplos desenvolvedores podem colaborar, sincronizando suas mudanças através de comandos como push, pull e fetch.
+
+> git remote -v → Lista os repositórios remotos configurados.
+
+> git remote add <nome> <URL> → Adiciona um novo repositório remoto.
+
+#### Criar um Repositório no GitHub/GitLab/Bitbucket
+
+1. Acesse a plataforma de sua escolha (GitHub, GitLab, Bitbucket).
+2. Crie um novo repositório sem inicializar com README, .gitignore ou licença.
+3. Copie a URL do repositório remoto.
+
+>> git remote add origin <URL_DO_REPOSITORIO>
+
+>> git remote -v → Para confirmar se o remoto foi adicionado corretamente
+
+>> git push -u origin main
+
+
+### Diferença entre git fetch e git pull 
+
+- git fetch	Apenas baixa as alterações do repositório remoto, sem aplicá-las na sua branch atual.
+- git pull	Baixa as alterações do repositório remoto e as mescla automaticamente na sua branch local.
